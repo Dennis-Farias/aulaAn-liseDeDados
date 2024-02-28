@@ -131,3 +131,102 @@ alunos$rend <- ordered(alunos$rend, levels = c("B", "M", "A"))
 
 alunos
 alunos$rend
+
+# A função attach expõe as colunas de um data frame
+attach(alunos)
+
+alunos$idade
+
+# Tirar a média das notas, combinadas por sexo e rendimento (dados qualitativos)
+tapply(nota, list(sexo, rend), mean) # mean é média
+
+tapply(nota, list(sexo, rend), median) # median é a mediana
+
+data()
+
+help(HairEyeColor)
+
+# A função head mostra as 6 primeiras linhas
+head(HairEyeColor)
+
+# A função summary mostra algumas estatísticas para cada variável
+summary(HairEyeColor)
+
+# Lendo ficheiros/arquivos
+
+# O diretório precisa ser escolhido para poder achar o arquivo
+wq = read.table("winequality.csv", # nome do ficheiro
+                header = TRUE, # a linha 1 tem os nomes das variáveis
+                sep = ";" # separador de variáveis
+                )
+
+# Outra forma de ler aquivos csv
+wq2 = read.csv("winequality.csv",
+               header = TRUE, sep = ';')
+
+head(wq)
+str(wq)
+summary(wq)
+
+# Salvando ficheiros no computador
+write.csv(alunos, "alunos.csv", row.names = TRUE)
+
+# Lendo o ficheiro anterior
+read.csv("alunos.csv", header = TRUE, sep = ",", row.names = 1)
+read.table("alunos.csv", header = TRUE, sep = ",", row.names = 1)
+
+# Separando registros
+wq_r = wq[wq$type == "red", ] # seleciona os tintos
+wq_w = wq[wq$type == "white", ] # seleciona os brancos
+
+# Salvando os registros separados
+write.csv(wq_r, "winequality_red.csv", row.names = FALSE)
+write.csv(wq_w, "winequality_white.csv", row.names = FALSE)
+
+# Salvando apenas 300 linhas
+wq_300 = read.csv("winequality.csv",
+                  sep = ";",
+                  stringsAsFactors = TRUE,
+                  nrows = 300)
+
+# Criar gráficos
+
+colors() # Todas as cores disponíveis
+
+plot(wq_300$type)
+
+plot(wq_300$alcohol,
+     main = "Teor Alcoólico",     # título
+     xlab = "Índice",             # rótulo horizontal (eixo x)
+     ylab = "Teor alcoólico (%)", # rótulo vertical (eixo y)
+     col = "red")                 # cor
+
+plot(wq_300$type,
+     main = "Tipo de Vinho",           # título
+     xlab = "Tipo",                    # rótulo horizontal (eixo x)
+     ylab = "Quantidade",              # rótulo vertical (eixo y)
+     col = c("maroon", "yellowgreen")  # cor
+     )
+
+# Gráfico de 2 variáveis
+cores = c("maroon", "yellowgreen") # Criando vetor com cores
+plot(wq_300$pH, wq_300$alcohol,
+     main = "Relação pH-teor alcoólico",
+     xlab = "pH",
+     ylab = "Teor alcoólico (%)",
+     col = cores[wq_300$type]
+     )
+legend(
+  "bottomright",        # posição da legenda
+  levels(wq_300$type),  # texto da legenda
+  pch = 1,              # símbolos da legenda
+  col = cores           # cores da legenda
+)
+# Adicionar tendência linear e algum texto
+abline(reg = lm(wq_300$alcohol ~ wq_300$pH), lty = "dashed")
+text(3.8, 13.5, "Se beber, não conduza!", cex = 0.8)
+
+# Para ciração de gráficos além do plot(), existem o hist() [histograma], barplot() [gráfico de barras], boxplot() [gráfico de caixas]
+# Posso salvar os gráficos
+
+
