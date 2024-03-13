@@ -23,10 +23,9 @@ t.test(dados12, mu=40, alt='g', conf.level = 0.95)
 
 # Rejeitar H0 pois t > qt
 
-# Teste a razão de variância: var.test()
+# 1.3
 
-# H0
-# H1
+# Teste a razão de variância: var.test()
 
 dados1.3 = read.csv('1.3.csv', header = TRUE, sep = ';')
 
