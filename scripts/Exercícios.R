@@ -93,17 +93,30 @@ var.test(amostra1, amostra2, ratio = 1, alternative = 'g')
 
 binom.test(130, 500, p = 0.2, alternative = "greater", conf.level = 0.99)
 
-## Exercício 1.9 a)
+## Exercício 1.9 
+# a)
 # Média
 # H0: x = 14
-# H1: x > 14
-# Se H0 for verdade -> ET -> t9
-# Devemos rejeitar H0 se ET > t9
-# p-valor = 0.04 < 0.05, logo rejeitar H0
-# Há evidência estatística para afirmar que o prazo médio de pagamento é mais de 14 dias
+# H1: x != 14
+# VP = 2P(t9 > ET) = p-valor = 0.08 > 0.05, logo não rejeitar H0
+# Não há evidência estatística para afirmar que o prazo médio de pagamento seja significativamente diferente de 14
 dados1.9 = c(34,3,4,44,29,17,32,14,28,16)
-t.test(dados1.9, mu=14, alt='g', conf.level = 0.95)
+t.test(dados1.9, mu=14, alt='t', conf.level = 0.95)
 
-# b)
+# H0 - rejeitada quando a hipotése é verdadeira é um erro tipo I 
+# H0 - rejeitada quando a hipotése é falsa é uma decisão correta
+# H0 - não rejeitada quando a hipotése é verdadeira é uma decisão correta
+# H0 - não rejeitada quando a hipotése é falsa é um erro tipo II
 
-
+## Exercício 1.6
+# a)
+# Valor esperado
+# H0: x = 12
+# H1: x < 12
+# ET = (x - u) / (s/[n) = -1.22
+# Se H0 for verdade -> ET -> t9(&=5%)
+# Devemos rejeitar H0 se ET < -t9 (&=5%) 
+# VP = P(t9 < ET) = P(t9 < -1.22) = 0.12 > 0.05, logo não rejeitar H0
+# Não há evidência estatística para afirmar que a empresa está a produzir pacotes com peso inferior ao garantido.
+dados1.6 = c(12,12.4,11.5,12.1,11.7,11.6,11.9,12.2,11.7,11.8)
+t.test(dados1.6, mu=12, alt='l')
