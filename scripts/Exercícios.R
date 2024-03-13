@@ -1,4 +1,4 @@
-# Exercício 1.1
+## Exercício 1.1
 
 dados11 = c(82, 81.5, 82.9, 80.5, 79.5, 80.5, 80.7)
 
@@ -13,7 +13,7 @@ t.test(dados11, mu=80, alt='g', conf.level = 0.95)
 
 # Rejeitar H0 pois p-valor < 0.05 que é o nível de significância
 
-# Exercício 2
+## Exercício 1.2
 
 dados12 = read.csv('1.2.csv', header = TRUE)
 
@@ -23,7 +23,7 @@ t.test(dados12, mu=40, alt='g', conf.level = 0.95)
 
 # Rejeitar H0 pois t > qt
 
-# 1.3
+## Exercício 1.3
 
 # Teste a razão de variância: var.test()
 
@@ -71,7 +71,7 @@ binom.test(7, 10, p = 0.5, alternative = "greater")
 # H1 = G1 > G2 [Melhora a precisão -> Menor variância = maior precisão]
 # ET = S1/S2 = 2.033
 # Se H0 for verdadeiro -> ET -> F 13,9
-#VP = P(F 13,9 > ET) = 0.1446 > 0.05
+# VP = P(F 13,9 > ET) = 0.1446 > 0.05
 # Não rejeitar H0, pois p-valor 0.14 > 0.05
 # Não há evidência estatística para afirmar que a experiência melhora a precisão da análise
 
