@@ -119,3 +119,12 @@ t.test(dados1.9, mu=14, alt='t', conf.level = 0.95)
 # Não há evidência estatística para afirmar que a empresa está a produzir pacotes com peso inferior ao garantido.
 dados1.6 = c(12,12.4,11.5,12.1,11.7,11.6,11.9,12.2,11.7,11.8)
 t.test(dados1.6, mu=12, alt='l')
+
+## Exercício 1.8
+df9 = read.csv('1.9.csv', sep = ';')
+
+var.test(df9$folheto1, df9$folhetoInsp2, ratio = 1, alternative = 't')
+
+t.test(df9$folheto1, df9$folhetoInsp2, mu=0, alternative='less', var.equal=TRUE) # Teste à esquerda 
+# var.equal=TRUE significa que as variâncias são iguais, como foi descoberto no var.test
+
