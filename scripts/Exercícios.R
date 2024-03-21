@@ -121,6 +121,7 @@ dados1.6 = c(12,12.4,11.5,12.1,11.7,11.6,11.9,12.2,11.7,11.8)
 t.test(dados1.6, mu=12, alt='l')
 
 ## Exercício 1.8
+# a)
 df9 = read.csv('1.9.csv', sep = ';')
 
 var.test(df9$folheto1, df9$folhetoInsp2, ratio = 1, alternative = 't')
@@ -128,3 +129,27 @@ var.test(df9$folheto1, df9$folhetoInsp2, ratio = 1, alternative = 't')
 t.test(df9$folheto1, df9$folhetoInsp2, mu=0, alternative='less', var.equal=TRUE) # Teste à esquerda 
 # var.equal=TRUE significa que as variâncias são iguais, como foi descoberto no var.test
 
+# b) Teste t-student duas amostras emparelhadas
+# Quando as amostras são emparelhadas (ou seja, são as mesmas pessoas) não é necessário calcular a variância
+t.test(df9$folhetoInsp1, df9$folheto1, mu=0, alternative = 'g', paired=TRUE)
+
+## Exercício 1.12
+# a) Teste t (valor esperado) para 2 amostras independentes
+v_pesado = c(105, 62, 141, 150, 45, 51, 57, 63, 105, 120)
+v_leve = c(80, 79, 113, 115, 116, 119, 78, 76, 80, 116)
+var.test(v_pesado, v_leve, ratio = 1, alternative = 't')
+# p-valor = 0.054 > 0.05
+# Não rejeitar H0, assumir que as variâncias são iguais
+
+t.test(v_pesado, v_leve, mu=0, alternative = 't', var.equal = TRUE)
+# Não rejeitar H0, não existe diferença entre os dois combustíveis
+
+# b) Teste a variância
+install.packages('EnvStats')
+library(EnvStats)
+
+# varTest para verificar a variância
+# var.test para verificar igualdade de variâncias entre amostras
+
+varTest(v_leve, alternative = 't', conf.level = 0.95, sigma.squared = 340)
+# p-valor = 0.65 > 0.05, não rejeitar H0, não há evidência estatística para afirmar que a variância é diferente de 340
