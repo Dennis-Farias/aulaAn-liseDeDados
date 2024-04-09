@@ -51,6 +51,8 @@ chisq.test(m3)
 # Há evidência estatística para afirmar que o rendimento familiar é independente da região
 # Não há evidência estatísitca para afirmar que o rendimento familiar é dependente da região
 
+## Teste de correlação bivariada: dados quantitativos contínuos ##
+
 ## Exercício 2.9
 x = c(6.93, 6.76, 5.94, 7.7, 5.61, 6.32, 7.08, 5.3, 5.86, 6.04, 7.13, 6.76)
 y = c(12.1, 12.4, 13, 11.9, 14.2, 13.6, 12.7, 14.2, 13.7, 13.3, 12.8, 13.4)
@@ -79,3 +81,23 @@ x = c(2326, 694, 1524, 1955, 490, 208, 1839, 641,
       1181, 2375, 2839, 141, 2181, 3375, 363, 944)
 mean(x) # Estimativa para Beta = 1442.25
 ks.test(x, y = 'pexp', rate = 1/1442.25, alternative = 't')
+
+## Exercício 2.5
+# Os parametros (média e desvio padrão) da dist. normal são estimados a partir da amostra
+# Eles não são dados no exercício
+library(nortest)
+dados2.5 = c(6.0,2.3,4.8,5.6,4.5,3.4,3.3,1.9,4.8,4.5)
+lillie.test(dados2.5)
+
+## Exercício 2.8
+# Teste do qui-quadrado 
+dados2.8 = c(64,29,36,12)
+chisq.test(dados2.8, p = c(9/16, 3/16, 3/16, 1/16))
+# Teste para diferentes probabilidades
+
+## Exercício 2.10
+# Teste do qui-quadrado
+dados2.10 = c(37,110,80,162,111)
+chisq.test(dados2.10, p=c(1/6, 1/4, 1/6, 1/4, 1/6))
+# p-valor < 0.05, logo rejeitar H0, há evidência estatística para afirmar que os dados estão viciados
+
