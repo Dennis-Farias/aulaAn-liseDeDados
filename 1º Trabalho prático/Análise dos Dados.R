@@ -55,6 +55,7 @@ boxplot(dados_final$gas_cozinha_glp_preco_revenda_avg ~ dados_final$regiao,
         col = cores_regioes)
 
 ## Histogramas ##
+
 hist(dados_final$gasolina_comum_preco_revenda_avg, 
      main = 'Preço da Gasolina Comum no Brasil',
      ylab = 'Frequência',
@@ -83,7 +84,7 @@ hist(dados_final$gas_cozinha_glp_preco_revenda_avg,
 
 # Cores para cada variável
 cores_variaveis = c('brown', 'darkolivegreen3', 'darkblue', 'cyan')
-# Gasolina Comum: 'brown'; Etanol Hidratado: 'darkolivegreen3'; Óleo Diesel: 'gray'; Gás de Cozinha: 'cyan'
+# Gasolina Comum: 'brown'; Etanol Hidratado: 'darkolivegreen3'; Óleo Diesel: 'darkblue'; Gás de Cozinha: 'cyan'
 
 # Relação entre gasolina comum e etanol hidratado
 
@@ -103,11 +104,20 @@ abline(reg = lm(dados_final$etanol_hidratado_preco_revenda_avg ~ dados_final$gas
                 lty = 'dashed'))
 
 # Relação entre gasolina comum e óleo diesel
+
 plot(dados_final$gasolina_comum_preco_revenda_avg, dados_final$oleo_diesel_preco_revenda_avg,
      main = 'Relação entre a Gasolina Comum e o Óleo Diesel', 
      col = cores_variaveis[c(1,3)],
      xlab = 'Preço da Gasolina Comum R$',
      ylab = 'Preço do Óleo Diesel R$')
+legend(
+  'bottomright',
+  legend = c('Gasolina Comum', 'Óleo diesel'),
+  pch = 1,
+  col = cores_variaveis[c(1,3)]
+)
+abline(reg = lm(dados_final$oleo_diesel_preco_revenda_avg ~ dados_final$gasolina_comum_preco_revenda_avg,
+                lty = 'dashed'))
 
 # Relação entre gasolina comum e gás de cozinha
 
@@ -116,27 +126,62 @@ plot(dados_final$gasolina_comum_preco_revenda_avg, dados_final$gas_cozinha_glp_p
      col = cores_variaveis[c(1,4)],
      xlab = 'Preço da Gasolina Comum R$',
      ylab = 'Preço do Gás de Cozinha R$')
+legend(
+  'bottomright',
+  legend = c('Gasolina Comum', 'Gás de Cozinha'),
+  pch = 1,
+  col = cores_variaveis[c(1,4)]
+)
+abline(reg = lm(dados_final$gas_cozinha_glp_preco_revenda_avg ~ dados_final$gasolina_comum_preco_revenda_avg,
+                lty = 'dashed'))
 
 # Relação entre etanol hidratado e óleo diesel
+
 plot(dados_final$etanol_hidratado_preco_revenda_avg, dados_final$oleo_diesel_preco_revenda_avg,
      main = 'Relação entre o Etanol Hidratado e o Óleo Diesel', 
      col = cores_variaveis[c(2,3)],
      xlab = 'Preço do Etanol Hidratado R$',
      ylab = 'Preço do Óleo Diesel R$')
+legend(
+  'bottomright',
+  legend = c('Etanol Hidratado', 'Óleo Diesel'),
+  pch = 1,
+  col = cores_variaveis[c(2,3)]
+)
+abline(reg = lm(dados_final$oleo_diesel_preco_revenda_avg ~ dados_final$etanol_hidratado_preco_revenda_avg,
+                lty = 'dashed'))
 
 # Relação entre etanol hidratado e gás de cozinha
+
 plot(dados_final$etanol_hidratado_preco_revenda_avg, dados_final$gas_cozinha_glp_preco_revenda_avg,
      main = 'Relação entre o Etanol Hidratado e o Gás de Cozinha', 
      col = cores_variaveis[c(2,4)],
      xlab = 'Preço do Etanol Hidratado R$',
      ylab = 'Preço do Gás de Cozinha R$')
+legend(
+  'bottomright',
+  legend = c('Etanol Hidratado', 'Gás de Cozinha'),
+  pch = 1,
+  col = cores_variaveis[c(2,4)]
+)
+abline(reg = lm(dados_final$gas_cozinha_glp_preco_revenda_avg ~ dados_final$etanol_hidratado_preco_revenda_avg,
+                lty = 'dashed'))
 
 # Relação entre óleo diesel e gás de cozinha
+
 plot(dados_final$oleo_diesel_preco_revenda_avg, dados_final$gas_cozinha_glp_preco_revenda_avg,
      main = 'Relação entre o Óleo Diesel e o Gás de Cozinha', 
      col = cores_variaveis[c(3,4)],
      xlab = 'Preço do Óleo Diesel R$',
      ylab = 'Preço do Gás de Cozinha R$')
+legend(
+  'bottomright',
+  legend = c('Óleo Diesel', 'Gás de Cozinha'),
+  pch = 1,
+  col = cores_variaveis[c(3,4)]
+)
+abline(reg = lm(dados_final$gas_cozinha_glp_preco_revenda_avg ~ dados_final$oleo_diesel_preco_revenda_avg,
+                lty = 'dashed'))
 
 
 # Análise de variância
