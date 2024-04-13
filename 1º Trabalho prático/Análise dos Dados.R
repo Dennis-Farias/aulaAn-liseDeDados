@@ -80,6 +80,33 @@ hist(dados_final$gas_cozinha_glp_preco_revenda_avg,
      xlab = 'Preço R$',
      col = 'cyan')
 
+## Plot ##
+# Gráficos para mostrar a variação do preço ao longo do tempo
+
+plot(dados_final$gasolina_comum_preco_revenda_avg,
+     main = 'Preço da Gasolina Comum no Brasil',
+     xlab = 'Tempo',
+     ylab = 'Preço R$',
+     col = 'brown')
+
+plot(dados_final$etanol_hidratado_preco_revenda_avg,
+     main = 'Preço do Etanol Hidratado no Brasil',
+     xlab = 'Tempo',
+     ylab = 'Preço R$',
+     col = 'darkolivegreen3')
+
+plot(dados_final$oleo_diesel_preco_revenda_avg,
+     main = 'Preço do Óleo Diesel no Brasil',
+     xlab = 'Tempo',
+     ylab = 'Preço R$',
+     col = 'darkblue')
+
+plot(dados_final$gas_cozinha_glp_preco_revenda_avg,
+     main = 'Preço do Gás de Cozinha no Brasil',
+     xlab = 'Tempo',
+     ylab = 'Preço R$',
+     col = 'cyan')
+
 ## Diagramas de dispersão ##
 
 # Cores para cada variável
@@ -184,10 +211,39 @@ abline(reg = lm(dados_final$gas_cozinha_glp_preco_revenda_avg ~ dados_final$oleo
                 lty = 'dashed'))
 
 
-# Análise de variância
+## Análise de variância ##
+## Teste para ver se existe diferença no preço da gasolina por região
+# H0 - Não existe diferença significativa entre o preço da gasolina por região
+# H1 - Existe diferença significativa entre o preço da gasolina por região
+an = aov(gasolina_comum_preco_revenda_avg ~ regiao, data=dados_final)
+summary(an)
+# p-valor = 0.49, não rejeitar H0, não há evidência estatística para afirmar que existe diferença significativa entre o preço da gasolina por região
+
+## Teste para ver se existe diferença no preço do etanol por região
+# H0 - Não existe diferença significativa entre o preço do etanol por região
+# H1 - Existe diferença significativa entre o preço do etanol por região
 an = aov(etanol_hidratado_preco_revenda_avg ~ regiao, data=dados_final)
 summary(an)
-# Não há diferença significativa entre o preço de gasolina por região, p-valor = 0.49
-# Teste de tukey compara região por região, as regiões que mais existem diferenças de preços são sudeste e norte
+# p-valor = 0.00 < 0.05, rejeitar H0, há evidência estatística para afirmar que existe diferença significativa no preço do etanol dependendo da região
+
+# Como houve diferença significativa por região, vamos ver quais regiões tiveram mais diferença significativa
+# Teste de tukey compara região por região
 TukeyHSD(an)
+# Diferença de preço mais significativa entre as regiões sudeste e norte
+
+## Regressão linear ##
+# Modelo para prever o preço do gás de cozinha baseado no preço da gasolina comum
+
+cor(dados_final$gas_cozinha_glp_preco_revenda_avg, dados_final$gasolina_comum_preco_revenda_avg)
+# Correlação = 0.96, forte e positiva
+
+modelo = lm(gas_cozinha_glp_preco_revenda_avg ~ gasolina_comum_preco_revenda_avg, data = dados_final)
+modelo
+
+# Coeficiente de determinação (% que a variável dependente é explicada pela variável explanatória ou independente)
+summary(modelo)$r.squared
+# R2 = 0.93, ou seja, 93% do preço do gás de cozinha consegue ser explicado pelo preço da gasolina comum
+
+# O resultado é o preço do gás de cozinha quando a gasolina está valendo 1,2,3,4,5,6
+predict(modelo, data.frame(gasolina_comum_preco_revenda_avg = c(1,2,3,4,5,6)))
 
