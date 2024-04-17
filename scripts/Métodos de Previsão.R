@@ -85,3 +85,45 @@ autoplot(z, series='Dados') +
   ggtitle('Exercício 3.7') +
   scale_colour_manual(values=c('Data'='grey50', '4-MA'='red'),
                       breaks = c('Data', '4-MA'))
+
+# b) Estimar a Sazonalidade pela decom.  Aditiva: decompose()
+
+decomp.adit = decompose(z, 'additive')
+
+decomp.adit
+
+plot(decomp.adit)
+
+summary(decomp.adit)
+
+# Exercício 5.8
+
+# a)
+
+dados = plastics
+
+autoplot(dados)
+
+# Existem flutações sazonais multiplicativas e tendência crescente
+
+# Exercício 5.12
+
+AESimples_12 = ses(eknives, h=1)
+AESimples_12
+summary(AESimples_12)
+
+# Exemplo carregamentos de abre-latas eléctricos
+ 
+dados =  ts(c(200,135, 195, 197.5, 310, 175, 155, 130, 220, 277.5, 235))
+
+AESimples_0.1 = ses(dados, h=1, alpha = 0.1)
+AESimples_0.1
+summary(AESimples_0.1)
+
+AESimples_0.5 = ses(dados, h=1, alpha = 0.5)
+AESimples_0.5
+summary(AESimples_0.5)
+
+AESimples_0.9 = ses(dados, h=1, alpha = 0.9)
+AESimples_0.9
+summary(AESimples_0.9)
