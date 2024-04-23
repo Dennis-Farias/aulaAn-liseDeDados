@@ -127,3 +127,45 @@ summary(AESimples_0.5)
 AESimples_0.9 = ses(dados, h=1, alpha = 0.9)
 AESimples_0.9
 summary(AESimples_0.9)
+
+# Exercício 5.13
+
+# a)
+
+dados5.13 = ts(c(2,4,6,8,10,12,14,16,18,20))
+autoplot(dados5.13)
+
+AESimples_13 = ses(dados5.13, h=1)
+summary(AESimples_13)
+
+# b)
+
+holt_13 = holt(dados5.13, h=1)
+summary(holt_13)
+
+# Exercício 5.16
+
+dados5.16 = AirPassengers
+dados5.16
+summary(dados5.16)
+autoplot(dados5.16)
+
+# Amortecimento exponencial simples 
+AESimples_16 = ses(dados5.16, h=24)
+summary(AESimples_16)
+autoplot(AESimples_16)
+
+# Método de holt
+holt_16 = holt(dados5.16, h=24)
+summary(holt_16)
+autoplot(holt_16)
+
+# Método de holt-winters aditivo
+holt_winters_ad_16 = hw(dados5.16, seasonal = 'additive', h=24)
+summary(holt_winters_ad_16)
+autoplot(holt_winters_ad_16)
+
+# Método de holt-winters multiplicativo
+holt_winters_mul_16 = hw(dados5.16, seasonal = 'multiplicative', h=24)
+summary(holt_winters_mul_16)
+autoplot(holt_winters_mul_16)
