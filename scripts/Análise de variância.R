@@ -17,3 +17,37 @@ dados
 
 modelo = aov(custo~instituto, data=dados)
 summary(modelo)
+
+# Exercício 3.2
+
+dados3.2 = data.frame(
+  tratamento = c(rep('A',10), rep('B', 10), rep('C', 10)),
+  produtividade = c(14, 13, 20, 15, 13, 15, 19, 18, 11, 13,
+                    13, 14, 13, 18, 15, 15, 16, 15, 16, 15,
+                    19, 16, 17, 20, 19, 16, 18, 21, 19, 16)
+)
+dados3.2
+
+modelo3.2 = aov(produtividade~tratamento, data=dados3.2)
+summary(modelo3.2)
+
+sum(residuals(modelo3.2))
+
+# Verificando os pressupostos do modelo ANOVA
+
+# 1. Independência:
+# Como as 3 amostras são equilibradas há garantia de independência mútua dos resíduos do modelo.
+
+# 2. Testes à normalidade
+
+shapiro.test(dados3.2$produtividade) # dos Dados
+
+shapiro.test(residuals(modelo3.2)) # dos Resíduos
+
+# 3. Averiguar a homocedastidade da variância
+
+bartlett.test(produtividade~tratamento, data=dados3.2)
+
+# 4. Comparações múltiplas com método de tukey
+
+TukeyHSD(modelo3.2)
