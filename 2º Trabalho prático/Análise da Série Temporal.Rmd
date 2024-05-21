@@ -53,3 +53,69 @@ autoplot(previsoes)
 Justificativa do método de amortecimento de Holt-Winters
 O método de Holt-Winters leva em conta tanto a tendência como a sazonalidade presentes na série temporal, permitindo uma modelagem precisa das variações observadas. Ele também é capaz de se adaptar a mudanças nessas características, o que é importante para prever esta série, que tem grandes flutuações. Este método é amplamente utilizado e demonstrou ser eficaz na previsão de séries temporais, especialmente aquelas com sazonalidade multiplicativa, por esses motivos estamos utilizando ele.
 
+Otimizando os parâmetros
+```{r}
+# Ajustando o modelo Holt-Winters com otimização automática dos parâmetros usando ETS
+modelo_ets <- ets(elecequip, model="AAA")
+
+# Fazendo previsões para os próximos 2 anos (2 períodos sazonais completos)
+previsoes2 <- forecast(modelo_ets, h=2*frequency(elecequip))
+previsoes2
+autoplot(previsoes2)
+```
+
+Calculando os erros
+```{r}
+mse <- mean((elecequip - previsoes_1passo)^2)
+mape <- mean(abs((elecequip - previsoes_1passo)/elecequip)) * 100
+mae <- mean(abs(elecequip - previsoes_1passo))
+print(paste("Erro Quadrático Médio (MSE):", mse))
+print(paste("Erro Absoluto Percentual Médio (MAPE):", mape))
+print(paste("Erro Absoluto Médio (MAE):", mae))
+```
+Erro Quadrático Médio (MSE):
+O MSE mede a média dos quadrados das diferenças entre os valores observados e previstos. Um valor menor de MSE indica um melhor ajuste do modelo. 
+O MSE pode ser sensível a outliers, pois os erros são elevados ao quadrado. É útil para entender a magnitude geral dos erros, mas deve ser interpretado com cautela se houver valores atípicos na série.
+
+Erro Absoluto Percentual Médio (MAPE):
+O MAPE mede a média dos erros percentuais absolutos entre os valores observados e previstos. É expresso em porcentagem, tornando-o fácil de interpretar em termos relativos. 
+O MAPE é útil para entender o erro em termos relativos, mas pode ser distorcido por valores observados muito pequenos, resultando em porcentagens muito altas.
+
+Erro Absoluto Médio (MAE):
+O MAE mede a média das diferenças absolutas entre os valores observados e previstos. É uma medida simples e intuitiva de erro.
+O MAE é menos sensível a outliers em comparação com o MSE, oferecendo uma visão clara do erro médio em termos absolutos.
+
+A baixa magnitude dos erros (MSE, MAPE, MAE) sugere que o modelo é adequado para prever a série temporal, indicando sua eficácia em prever a produção de equipamentos elétricos.
+
+Análise dos resíduos
+```{r}
+# Resíduos
+residuos = residuals(modelo_ets)
+
+# Teste de Normalidade
+shapiro_test = shapiro.test(residuos)
+shapiro_test
+# H0: Os dados seguem uma distribuição normal
+# H1: Os dados não seguem uma distribuição normal
+# p-valor = 0.10 > 0.05, não rejeitamos H0, os dados seguem uma distribuição normal
+
+# Funções de Autocorrelação (ACF e PACF)
+acf(residuos, main="Função de Autocorrelação dos Resíduos")
+pacf(residuos, main="Função de Autocorrelação Parcial dos Resíduos")
+# As funções mostram que os resíduos não têm autocorrelação significativa, o que indica que o modelo capturou todas as dependências temporais presentes na série.
+
+# Gráficos Relevantes
+
+# Resíduos
+plot(residuos, main="Resíduos do Modelo", ylab="Resíduos", xlab="Tempo")
+
+# Histograma dos resíduos
+hist(residuos, breaks=20, main="Histograma dos Resíduos", xlab="Resíduos", col="blue")
+
+# Q-Q plot dos resíduos
+qqnorm(residuos)
+qqline(residuos, col="red")
+
+# A análise dos resíduos é crucial para validar o modelo ajustado. Como os resíduos se comportam como ruído branco (sem autocorrelação e normalmente distribuídos), o modelo é considerado adequado.
+```
+
