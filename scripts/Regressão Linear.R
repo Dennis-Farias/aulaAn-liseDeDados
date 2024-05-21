@@ -104,3 +104,67 @@ lines(smooth.spline(fitted(modelo4.2),
       col='red', lwd=2)
 
 # A independência dos resíduos não é assumida, pois os dados seguem uma tendência
+
+
+
+#### Modelo de Regressão Linear Múltipla ####
+library(lmtest)
+
+# Inserir os dados
+
+dados2 = data.frame(
+  x1 = c(5.0, 5.8, 4.2, 6.0, 4.8, 5.6, 4.4, 5.2, 5.4, 4.6),
+  x2 = c(7.2, 7.8, 8.1, 8.7, 6.6, 7.5, 9.0, 6.3, 8.4, 6.9),
+  y = c(51.7, 56.4, 49.3, 60.7, 48.9, 54.1, 54.9, 49.8, 57.9, 50.4)
+)
+
+dados2
+
+## Criar o modelo
+
+modelo_RLM = lm(y ~ x1 + x2, data=dados2)
+
+summary(modelo_RLM)
+
+# Teste de significância estatística global (anova)
+
+summary(modelo_RLM)
+# F-statistic: 71.34, p-value: 2.212e-05
+
+# Teste de significância estatística aos parâmetros (anova)
+
+summary(modelo_RLM)
+# B1, ET = 7.919, p-value: 9.73e-05
+# B2, ET = 8.186, p-value: 7.87e-05
+
+# Análise ao coeficiente de determinação R^2
+
+R2 = 0.9532
+# 95% da variação de y é explicada pelo modelo
+
+# Análise de significância aos Resíduos do modelo:
+
+modelo_RLM$residuals
+
+# Indepedência
+
+plot(modelo_RLM$residuals)
+# Os resíduos são independentes pois eles seguem um padrão aleatório
+
+# Homocedasticidade
+
+bptest(modelo_RLM)
+# p-valor > 0.05, não rejeitar H0, os dados são homogêneos
+
+# Normalidade
+
+shapiro.test(modelo_RLM$residuals)
+# p-valor > 0.05, não rejeitar H0, os dados são normalmente distribuídos
+
+# Efetuando previsão de Y para (X1, X2) = (6.1, 8.0)
+
+previsao = predict(modelo_RLM,
+                   newdata =data.frame(x1 = 6.1, x2 = 8),
+                   interval = 'prediction',
+                   level = 0.95)
+previsao

@@ -1,0 +1,55 @@
+Carregando o pacote 'fpp2'
+```{r}
+library(fpp2)
+```
+Carregando a série temporal 'elecequip'.
+Esta série temporal representa a produção mensal de equipamentos elétricos nos EUA de 1996 a 2012.
+```{r}
+data(elecequip)
+```
+Visualizando a série temporal
+```{r}
+autoplot(elecequip, main="Produção mensal de Equipamentos Elétricos nos EUA", ylab="Produção", xlab="Tempo")
+```
+Características da série:
+Tendência:
+Tendência Crescente: A série mostra um aumento consistente na produção de equipamentos elétricos ao longo do período, refletindo o crescimento industrial e econômico dos EUA durante esse tempo.
+Sazonalidade:
+Sazonalidade Multiplicativa: Padrões sazonais evidentes indicam meses específicos com aumentos ou diminuições regulares na produção, possivelmente devido a fatores como demandas de mercado ou ciclos de manutenção.
+Ciclo:
+Durante os anos 2000 é possível visualizar um ciclo de aumento na produção de equipamentos elétricos, isso pode ser devido ao boom tecnológico dos anos 2000 e a demanda por novos equipamentos.
+Por volta de 2008 é observado um ciclo de queda significativa na produção como resultado da crise financeira global, seguida por um período de recuperação econômica nos anos subsequentes.
+
+Decompondo a série:
+```{r}
+serie_decomposta = decompose(elecequip, 'multiplicative')
+plot(serie_decomposta)
+```
+Resultados da decomposição:
+Tendência:
+Identificamos uma tendência geral crescente na produção de equipamentos elétricos ao longo do período de 1996 a 2012, refletindo um aumento constante na produção.
+Sazonalidade:
+Observamos padrões sazonais claros na série, com picos e vales que se repetem a cada ano, indicando flutuações regulares na produção relacionadas a fatores sazonais.
+Resíduos:
+Após remover a tendência e a sazonalidade, os resíduos ainda mostram variações estacionárias, indicando a presença de flutuações não explicadas por esses componentes.
+Interpretação:
+A decomposição sugere uma forte influência de fatores sazonais na produção, juntamente com uma tendência geral de crescimento. Eventos anômalos ou influências externas podem ser observados nos resíduos.
+Conclusão:
+A análise da decomposição revela padrões consistentes na produção de equipamentos elétricos, destacando a importância de considerar tanto os fatores sazonais quanto os de longo prazo na compreensão da dinâmica da série temporal.
+
+Previsões para os próximos 2 períodos
+```{r}
+# Carregando o pacote 'forecast'
+library(forecast)
+
+# Modelo Holt-Winters com sazonalidade multiplicativa
+modelo_hw <- hw(elecequip, seasonal="multiplicative")
+
+# Fazendo previsões para os próximos 2 períodos sazonais completos
+previsoes <- forecast(modelo_hw, h=2*frequency(elecequip))
+previsoes
+autoplot(previsoes)
+```
+Justificativa do método de amortecimento de Holt-Winters
+O método de Holt-Winters leva em conta tanto a tendência como a sazonalidade presentes na série temporal, permitindo uma modelagem precisa das variações observadas. Ele também é capaz de se adaptar a mudanças nessas características, o que é importante para prever esta série, que tem grandes flutuações. Este método é amplamente utilizado e demonstrou ser eficaz na previsão de séries temporais, especialmente aquelas com sazonalidade multiplicativa, por esses motivos estamos utilizando ele.
+
