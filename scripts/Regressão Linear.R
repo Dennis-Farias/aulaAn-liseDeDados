@@ -168,3 +168,51 @@ previsao = predict(modelo_RLM,
                    interval = 'prediction',
                    level = 0.95)
 previsao
+
+
+# Exercício 4.4
+
+dados4.4 = data.frame(
+  x1 = c(1, 2, 3, 3.5, 4.5, 5, 5.6, 7.5, 6.5, 9),
+  x2 = c(2, 2.5, 3.5, 5, 7.5, 9.5, 12, 16.5, 15, 18.5),
+  y = c(1, 1.1, 1.2, 1.4, 1.6, 1.7, 2, 2.5, 2.2, 2.8)
+)
+
+## Criar o modelo
+
+modelo_4.4 = lm(y ~ x1 + x2, data=dados4.4)
+
+summary(modelo_4.4)
+
+## Verificação dos pressupostos do modelo
+
+# Independência
+
+plot(modelo_4.4$residuals)
+# De acordo com o gráfico de dispersão dos resíduos, não há nenhum padrão atípico perceptivo
+# Então o pressuposto de independência é garantido.
+
+# Normalidade
+
+shapiro.test(modelo_4.4$residuals)
+# H0: li é normal
+# H1: li não é normal
+# p-valor = 0.62 > 0.05, não rejeitar H0, os dados são normalmente distribuídos
+
+# Homocedasticidade
+
+bptest(modelo_4.4)
+# p-valor > 0.05, não rejeitar H0, o pressuposto da homocedasticidade é assumida
+
+# Efetuando previsão de Y para (X1, X2) = (4, 7)
+
+previsao_4.4 = predict(modelo_4.4,
+                   newdata =data.frame(x1 = 4, x2 = 7),
+                   )
+previsao_4.4
+
+# A previsão é igual a 1.541852
+
+# Coeficiente de determinação amostral R^2
+# R^2:  0.9922
+# 99% da variação de y é explicada pelo modelo
