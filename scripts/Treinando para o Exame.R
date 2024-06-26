@@ -136,3 +136,7 @@ shapiro.test(residuals(modelo)) # dos Resíduos
 # 3. Averiguar a homocedastidade da variância
 
 bartlett.test(tempo~metodo, data=dados)
+
+# 4. Comparações múltiplas com método de tukey
+
+TukeyHSD(modelo)
