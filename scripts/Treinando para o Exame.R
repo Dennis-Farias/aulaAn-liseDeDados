@@ -1,4 +1,7 @@
-# Exame modelo AD - Regressão Linear
+## Exame modelo AD ##
+
+## Regressão Linear
+
 library(lmtest)
 
 # Inserir os dados
@@ -72,3 +75,64 @@ summary(modelo)
 # 99% da variação de y é explicada pelo modelo
 
 # Fazer teste de significância global do modelo se necessário
+
+
+## Métodos de previsão
+
+library(fpp2)
+library(Mcomp)
+library(expsmooth)
+library(fma)
+library(forecast)
+library(ggplot2)
+library(graphics)
+
+y = c(99, 120, 139, 160,
+      88, 108, 127, 148,
+      93, 111, 131, 150,
+      111, 130, 152, 170)
+
+# Informar o R que o vetor de dados z representa uma série temporal trimestal
+
+z = ts(y, frequency = 4)
+autoplot(z)
+
+# Principais características:
+# Tendência: estacionária, crescente, decrescente
+# Sazonalidade: não tem, mista, aditiva, multiplicativa
+# Ciclo: Tem, não tem
+
+
+## Análise de variância
+
+dados = data.frame(
+  metodo = c(rep('1',7), rep('2', 5), rep('3', 7)),
+  tempo = c(15,12,18,10,20,16,11,
+            17,16,13,9,8,
+            11,19,17,22,24,23,21)
+)
+
+dados
+
+modelo = aov(tempo~metodo, data=dados)
+summary(modelo)
+
+# Teste para ver se existe diferença entre os métodos de ensino e o tempo para resolver o problema
+# H0: Não existe diferença significativa entre os métodos
+# H1: Existe diferença significativa entre os métodos
+# p-valor = 0.02 < 0.05, rejeitamos H0, há evidência estatística para afirmar que existe diferença significativa entre os métodos
+
+# Verificando os pressupostos do modelo ANOVA
+
+# 1. Independência:
+# Como as 3 amostras são equilibradas há garantia de independência mútua dos resíduos do modelo.
+
+# 2. Testes à normalidade
+
+shapiro.test(dados$tempo) # dos Dados
+
+shapiro.test(residuals(modelo)) # dos Resíduos
+
+# 3. Averiguar a homocedastidade da variância
+
+bartlett.test(tempo~metodo, data=dados)
